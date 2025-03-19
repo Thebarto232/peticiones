@@ -1,4 +1,4 @@
-import { getUsuarios, getPost, getCommets, getAlbums, getPhotos,getTareas } from "./modulos/tareas/index.js"; // importamos los modulos   
+import { getUsuarios, getPost, getCommets, getAlbums, getPhotos } from "./modulos/tareas/index.js"; // importamos los modulos   
 // aplicamos la importación de los modulos para que se ejecute el código
 const URL = "https://jsonplaceholder.typicode.com"; // url de la api
 
@@ -49,6 +49,10 @@ const encontrarUsuario = async (username) => {//accedemos al metodo  usuario que
       }
     }));
     };
+
+
+
+
 const manejardatos = async () => { // creamos una promesa donde vamos validar varias tareas
     const usuariosData = await getUsuarios(URL); // usamos el método getUsuarios que nos retorna un objeto donde tiene los usuarios
     // aplicamos el await que sirve para que se cumpla la promesa
@@ -67,6 +71,7 @@ const manejardatos = async () => { // creamos una promesa donde vamos validar va
         return { ...usuario, photoAlbum: photoAlbumData, comentPost: comentPostData }; // imprimimos todas las peticiones con el objeto
     }));
 };
+
 let usuarios = []; // declaramos las variables de forma global para poder acceder a ellas
 let posts = [];
 let comentPost = [];
@@ -74,45 +79,50 @@ let albums = [];
 let photoAlbum = [];
 
 
-const menu_opciones = async () => {
-    let opcion = "";
-    
-    while (opcion !== "6") { // Continúa mostrando el menú hasta que el usuario elija "6" para salir
-      console.log("1. Usuarios");
-      console.log("2. Posts");
-      console.log("3. Comentarios");
-      console.log("4. Álbumes");
-      console.log("5. Fotos");
-      console.log("6. Salir");
-  
-      opcion = prompt("Seleccione una opción");
-  
-      switch (opcion) {
-        case "1":
-          console.log(usuarios); // imprime los usuarios
-          break;
-        case "2":
-          console.log(posts); // imprime los posts
-          break;
-        case "3":
-          console.log(comentPost); // imprime los comentarios
-          break;
-        case "4":
-          console.log(albums); // imprime los álbumes
-          break;
-        case "5":
-          console.log(photoAlbum); // imprime las fotos
-          break;
-        case "6":
-          console.log("salir"); // imprime salir
-          break;
-        default:
-          console.log("opcion no validad"); // imprime opción no válida
-          break;
-      }
+const menu_opciones = async () => { // funciones del menu de opciones
+    console.log("1. usuarios");
+    console.log("2. post");
+    console.log("3. comentarios");
+    console.log("4. albumes");
+    console.log("5. fotos");
+    console.log("6. salir");
+
+    let opcion = prompt("Ingrese una opción: "); // ingresamos una opción
+
+    switch (opcion) { // creamos un switch para las opciones
+        case "1": // caso 1
+            console.log(usuarios); // muestra los usuarios
+            menu_opciones(); // vuelve a llamar al menú de opciones
+            break;
+        case "2": // caso 2
+            console.log(posts); // muestra los posts
+            menu_opciones(); //
+            break;
+        case "3": // caso 3
+
+            console.log(comentPost); // muestra los comentarios
+            menu_opciones(); // llama al menú de opciones
+            break;
+        case "4": // caso 4
+            console.log(albums); // muestra los álbumes
+            menu_opciones(); // llama al menú de opciones
+            break;
+
+        case "5": // caso 5
+            console.log(photoAlbum); // muestra las fotos
+            menu_opciones(); // llama al menú de opciones
+            break;
+        case "6": // caso 6
+            console.log("Saliendo..."); // mensaje de salida
+            break;
+        default: // caso por defecto
+            console.log("Opción no válida"); // mensaje de opción no válida
+            menu_opciones(); // llama al menú de opciones
+            break;
+            
     }
-  };
-  
+   
+};
 
 manejardatos().then((data) => { // cuando se resuelven las promesas
     usuarios = data.map((item) => item); // extraemos los usuarios y los asignamos a la variable global
@@ -120,13 +130,12 @@ manejardatos().then((data) => { // cuando se resuelven las promesas
     comentPost = data.map((usuario) => usuario.comentPost); // extraemos los comentarios de los posts
     albums = data.map((usuario) => usuario.photoAlbum); // extraemos los álbumes
     photoAlbum = data.map((usuario) => usuario.photoAlbum); // extraemos las fotos de los álbumes
-    console.log(data); // muestra toda la información obtenida
+    console.log(data); // muestrar toda la información obtenida
     console.log(usuarios); // mostrar los usuarios
     console.log(posts);
     console.log(comentPost); // mostrar los comentarios
     console.log(albums); // mostrar los álbumes
-   console.log(photoAlbum);
-    console.log(photoAlbum);
+    
     ListasPendientes().then((data) => { // cuando se resuelven las promesas
         console.log(data); // muestra la información obtenida
     }
@@ -135,10 +144,10 @@ manejardatos().then((data) => { // cuando se resuelven las promesas
     encontrarUsuario("Samantha").then((data) => { // cuando se resuelven las promesas
         console.log(data); // muestra la información obtenida
     });
-    // console.log(usuarios); // mostrar los usuarios
-    // console.log(posts);  
+    console.log(usuarios); // mostrar los usuarios
+    console
     
-
+ 
      // mostrar los posts
     menu_opciones(); // llamamos  al menú de opciones
 });

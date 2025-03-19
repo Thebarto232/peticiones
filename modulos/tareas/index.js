@@ -7,5 +7,3 @@ export { getPost } from "./posts.js";
 export { getCommets } from "./commets.js";
 export { getAlbums } from "./albums.js";
 export { getPhotos } from "./photos.js";
-export { menu_opciones } from "./menu_opciones.js";
-export {getTareas} from "./tareas.js";
